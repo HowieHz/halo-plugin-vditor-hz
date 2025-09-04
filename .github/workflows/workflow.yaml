@@ -34,6 +34,7 @@ jobs:
         with:
           node-version: 24
           cache: 'pnpm'
+          cache-dependency-path: 'console/pnpm-lock.yaml'
       - name: Download Vditor assets
         run: |
           chmod a+x download_dist.sh
