@@ -5,9 +5,7 @@ import type { QuickInsert } from "@/type/editor";
  * @param quickInsertUrls 配置文件地址
  * @return 配置文件
  */
-export const fetchAllQuickInsert = async (
-  quickInsertUrls: { url: string }[],
-): Promise<QuickInsert[]> => {
+export const fetchAllQuickInsert = async (quickInsertUrls: { url: string }[]): Promise<QuickInsert[]> => {
   const quickInsertList: QuickInsert[] = [];
   // Get Default Path
   for (const qi of quickInsertUrls) {
@@ -27,9 +25,7 @@ export const fetchAllQuickInsert = async (
  * @param customRenders URL列表
  * @return {string[]} 渲染器脚本文本
  */
-export const fetchAllCustomRenderScripts = async (
-  customRenders: { url: string }[],
-): Promise<string[]> => {
+export const fetchAllCustomRenderScripts = async (customRenders: { url: string }[]): Promise<string[]> => {
   const scripts: string[] = [];
   for (const render of customRenders) {
     try {

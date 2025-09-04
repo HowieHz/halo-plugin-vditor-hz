@@ -1,11 +1,11 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { includeIgnoreFile } from "@eslint/compat";
-import vue from "eslint-plugin-vue";
 import typescript from "@typescript-eslint/eslint-plugin";
-import vueParser from "vue-eslint-parser";
 import typescriptParser from "@typescript-eslint/parser";
 import eslintPluginPrettierRecommended from "eslint-plugin-prettier/recommended";
+import vue from "eslint-plugin-vue";
+import vueParser from "vue-eslint-parser";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

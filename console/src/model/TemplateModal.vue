@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import type { Schema } from "@/type/editor";
 import { t } from "@/utils/i18n-utils";
 import { VButton, VModal, VSpace } from "@halo-dev/components";
-import type { Schema } from "@/type/editor";
+import { ref, watch } from "vue";
 
 const data = ref<{ [key: string]: string }>({});
 const loadKey = ref("");
@@ -22,20 +22,14 @@ const generateCode = () => {
     let code = props.schema.template || "";
     const formkit = props.schema.formKit;
     formkit.forEach((form: { [key: string]: string }) => {
-      code = code.replace(
-        `$${form.name}$`,
-        data.value[form.name] || form.value,
-      );
+      code = code.replace(`$${form.name}$`, data.value[form.name] || form.value);
     });
     if (!props.schema.inline) code = "\n\n" + code + "\n\n";
     emit("done", htmlEncode(code));
     return;
   }
 
-  emit(
-    "done",
-    (props.schema.handler && props.schema.handler(data.value)) || null,
-  );
+  emit("done", (props.schema.handler && props.schema.handler(data.value)) || null);
 };
 
 // 修改FormKit ID来实现Schema重载
@@ -67,12 +61,7 @@ const htmlEncode = (str: string) => {
 </script>
 
 <template>
-  <VModal
-    :visible="props.open"
-    :layer-closable="false"
-    :title="schema.name"
-    @close="emit('close')"
-  >
+  <VModal :visible="props.open" :layer-closable="false" :title="schema.name" @close="emit('close')">
     <FormKit v-model="data" type="form">
       <FormKitSchema :key="loadKey" :schema="schema.formKit" :data="data" />
     </FormKit>
