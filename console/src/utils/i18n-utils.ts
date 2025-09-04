@@ -17,7 +17,7 @@ const langDict: { [key: string]: I18nLang } = {
  */
 export function t(
   key: string,
-  lang: keyof II18n | undefined = undefined
+  lang: keyof II18n | undefined = undefined,
 ): string {
   if (!lang) lang = getLanguage(localStorage.getItem("locale") || "zh-CN");
   return langDict[lang][key];

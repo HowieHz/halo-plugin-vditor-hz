@@ -6,7 +6,7 @@ import type { QuickInsert } from "@/type/editor";
  * @return 配置文件
  */
 export const fetchAllQuickInsert = async (
-  quickInsertUrls: { url: string }[]
+  quickInsertUrls: { url: string }[],
 ): Promise<QuickInsert[]> => {
   const quickInsertList: QuickInsert[] = [];
   // Get Default Path
@@ -15,7 +15,7 @@ export const fetchAllQuickInsert = async (
       const response = await fetch(qi.url);
       const quickInsertJson: QuickInsert = await response.json();
       quickInsertList.push(quickInsertJson);
-    } catch (e) {
+    } catch {
       // ignore this
     }
   }
@@ -28,14 +28,14 @@ export const fetchAllQuickInsert = async (
  * @return {string[]} 渲染器脚本文本
  */
 export const fetchAllCustomRenderScripts = async (
-  customRenders: { url: string }[]
+  customRenders: { url: string }[],
 ): Promise<string[]> => {
   const scripts: string[] = [];
   for (const render of customRenders) {
     try {
       const response = await fetch(render.url);
       scripts.push(await response.text());
-    } catch (e) {
+    } catch {
       // Ignore this
       console.error("Load custom render scripts failed! url => " + render.url);
     }

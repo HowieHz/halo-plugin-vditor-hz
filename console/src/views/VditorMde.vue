@@ -33,7 +33,7 @@ const props = withDefaults(
     raw: "",
     content: "",
     uploadImage: undefined,
-  }
+  },
 );
 
 const vditor = ref<Vditor>();
@@ -78,7 +78,7 @@ watch(
       internalTitle.value = val;
       vditor.value?.setValue(vdiVal.replace(/# .*?\n/, `# ${val}\n`));
     }
-  }
+  },
 );
 
 // Update content
@@ -101,7 +101,7 @@ const debounceOnUpdate = () => {
   emit("update:raw", value);
   emit(
     "update:content",
-    renderHTML(vditor.value, editorConfig.value || defaultEditorConfig) || ""
+    renderHTML(vditor.value, editorConfig.value || defaultEditorConfig) || "",
   );
   emit("update", value);
 };
@@ -136,7 +136,7 @@ onMounted(async () => {
   const lang = localStorage.getItem("locale") || "zh-CN";
   try {
     const response = await fetch(
-      "/apis/api.vditor.mczhengyi.top/editor-options"
+      "/apis/api.vditor.mczhengyi.top/editor-options",
     );
     editorConfig.value = await response.json();
   } catch (e) {
@@ -146,7 +146,7 @@ onMounted(async () => {
   if (!editorConfig.value) return;
   // Assign allowImage
   allowImageUpload = allowImageUpload.concat(
-    editorConfig.value.extension.allowImageType.split(",").map((i) => i.trim())
+    editorConfig.value.extension.allowImageType.split(",").map((i) => i.trim()),
   );
   console.log("ALLOW", allowImageUpload);
   // 禁用HTML代码块隐藏
@@ -154,20 +154,20 @@ onMounted(async () => {
     addStyle(
       "[data-type=html-block] pre {display: block!important;}\n" +
         ".vditor-ir__node[data-type=html-block] .vditor-ir__marker {height: auto; width: auto; display: inline;}",
-      "vditor-mde-hide-html"
+      "vditor-mde-hide-html",
     );
   // Debug Mode
   debugMode.value = editorConfig.value.developer.debugger;
   // Quick Insert Process
   const qil = await fetchAllQuickInsert(
-    editorConfig.value.basic.quickInsertUrl
+    editorConfig.value.basic.quickInsertUrl,
   );
   qil.forEach((q) => {
     quickInsertInject(q.inject || [], q.provider);
   });
   // Get all custom render script
   const renderScripts = await fetchAllCustomRenderScripts(
-    editorConfig.value?.basic.customRenders
+    editorConfig.value?.basic.customRenders,
   );
   // Create Vditor
   vditor.value = new Vditor(
@@ -220,7 +220,7 @@ onMounted(async () => {
             }
             // Insert Image
             vditor.value?.insertValue(
-              `\n\n![${res.spec.displayName}](${res.status.permalink})\n\n`
+              `\n\n![${res.spec.displayName}](${res.status.permalink})\n\n`,
             );
             // Restore cursor
             vditor.value?.enable();
@@ -265,7 +265,7 @@ onMounted(async () => {
               `${cdn}/dist/js/katex/katex.min.css`,
             ];
             Promise.all(
-              css.map((url) => fetch(url).then((res) => res.text()))
+              css.map((url) => fetch(url).then((res) => res.text())),
             ).then((contentList) => {
               let css = "";
               contentList.forEach((content) => (css += content + "\n\n"));
@@ -278,7 +278,7 @@ onMounted(async () => {
                 `<div class="vditor-reset">${doc.innerHTML}</div>`,
                 {
                   extraCss: css,
-                }
+                },
               );
               copyAsHTML(html).then(() => {
                 vditor.value?.tip("已复制，部分样式可能会丢失！", 2000);
@@ -287,7 +287,7 @@ onMounted(async () => {
           },
         },
       ],
-    })
+    }),
   );
 });
 

@@ -10,7 +10,7 @@ import hyperlinkInline from "@/schema/hyperlink-inline";
 import { addScript, addStyleSheet } from "@/utils/dom-utils";
 import type Vditor from "vditor";
 import type { EditorConfig } from "@/utils/config-utils";
- import type {PluginModule} from "@halo-dev/console-shared";
+import type { PluginModule } from "@halo-dev/console-shared";
 
 declare const HaloJs: {
   renderHalo: (content: string, cdn: string) => string;
@@ -25,7 +25,7 @@ export function getOptions(options: Options): IOptions {
   const toolbar = getToolbar(
     options.showAttachment,
     options.openModal,
-    getLanguage(options.language)
+    getLanguage(options.language),
   );
   if (options.enableQuickInsert) {
     options.quickInsertList.forEach((insert: QuickInsert) => {
@@ -104,7 +104,7 @@ export function getLanguage(lang = "zh-CN"): keyof II18n {
 function getToolbar(
   showAttachmentCb: () => void,
   openModal: (schema: Schema) => void,
-  lang: keyof II18n
+  lang: keyof II18n,
 ): (string | IMenuItem)[] {
   return [
     "emoji",
@@ -182,13 +182,13 @@ function getPresetCustomToolbar(openModal: (schema: Schema) => void) {
       name: "insert_gallery",
       icon: t("insert_gallery"),
       click: () => openModal(gallery),
-    }
+    },
   );
   // 加入插入超链接卡片的支持
   const hyperlinkCardPlugin = window["editor-hyperlink-card"] as PluginModule;
   if (hyperlinkCardPlugin) {
     console.log(
-      "hyperlinkCard plugin is installed and enabled, load custom toolbar"
+      "hyperlinkCard plugin is installed and enabled, load custom toolbar",
     );
     // Fix https://github.com/justice2001/halo-plugin-vditor/issues/65
     try {
@@ -208,7 +208,7 @@ function getPresetCustomToolbar(openModal: (schema: Schema) => void) {
         name: "hyperlink_inline",
         icon: t("hyperlink_inline"),
         click: () => openModal(hyperlinkInline),
-      }
+      },
     );
   }
   return toolbar;
@@ -216,7 +216,7 @@ function getPresetCustomToolbar(openModal: (schema: Schema) => void) {
 
 function buildQuickInsertToolbar(
   openModal: (schema: Schema) => void,
-  quickInsertList: QuickInsert
+  quickInsertList: QuickInsert,
 ): IMenuItem {
   const children: IMenuItem[] = [];
   quickInsertList.schema.forEach((sch: Schema) => {
@@ -255,11 +255,11 @@ function getCustomRenders(options: Options):
   // 启用内置渲染器
   addScript(
     "/plugins/vditor-mde/assets/static/halo-renders/index.js",
-    "halo-render"
+    "halo-render",
   );
   addStyleSheet(
     "/plugins/vditor-mde/assets/static/halo-renders/index.css",
-    "halo-render-css"
+    "halo-render-css",
   );
   renders.push({
     language: "halo",
@@ -267,7 +267,7 @@ function getCustomRenders(options: Options):
       element.querySelectorAll(".language-halo").forEach((el) => {
         el.outerHTML = HaloJs.renderHalo(
           el.textContent || "",
-          "/plugins/vditor-mde/assets/static/halo-renders"
+          "/plugins/vditor-mde/assets/static/halo-renders",
         );
       });
     },
@@ -304,7 +304,7 @@ function getCustomRenders(options: Options):
  */
 export function renderHTML(
   vditor: Vditor | undefined,
-  config: EditorConfig
+  config: EditorConfig,
 ): string {
   if (!vditor) return "";
   let value = vditor.getHTML();
@@ -312,11 +312,11 @@ export function renderHTML(
   customRenders?.forEach((render) => {
     const reg = new RegExp(
       `<pre><code class="language-${render.language}">(.*?)</code></pre>`,
-      "gs"
+      "gs",
     );
     value = value.replace(
       reg,
-      `<div class="language-${render.language}">$1</div>`
+      `<div class="language-${render.language}">$1</div>`,
     );
   });
   // Remove H1 Title When start with "h1"

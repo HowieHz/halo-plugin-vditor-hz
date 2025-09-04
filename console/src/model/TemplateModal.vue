@@ -24,7 +24,7 @@ const generateCode = () => {
     formkit.forEach((form: { [key: string]: string }) => {
       code = code.replace(
         `$${form.name}$`,
-        data.value[form.name] || form.value
+        data.value[form.name] || form.value,
       );
     });
     if (!props.schema.inline) code = "\n\n" + code + "\n\n";
@@ -34,7 +34,7 @@ const generateCode = () => {
 
   emit(
     "done",
-    (props.schema.handler && props.schema.handler(data.value)) || null
+    (props.schema.handler && props.schema.handler(data.value)) || null,
   );
 };
 
