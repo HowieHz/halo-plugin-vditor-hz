@@ -24,7 +24,7 @@ const props = withDefaults(
   defineProps<{
     title?: string;
     raw?: string;
-    content: string;
+    content?: string;
     uploadImage?: (file: File) => Promise<Attachment>;
   }>(),
   {
