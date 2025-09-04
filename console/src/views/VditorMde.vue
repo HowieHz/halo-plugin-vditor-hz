@@ -128,7 +128,7 @@ onMounted(async () => {
   try {
     const response = await fetch("/apis/api.vditor.mczhengyi.top/editor-options");
     editorConfig.value = await response.json();
-  } catch (e) {
+  } catch {
     // ignore this
     editorConfig.value = defaultEditorConfig;
   }
