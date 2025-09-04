@@ -186,6 +186,12 @@ onMounted(async () => {
           vditor.value?.tip("当前已经存在正在上传的文件，请等待上传完成", 2000);
           return;
         }
+
+        if (!files[0]) {
+          vditor.value?.tip("未选择文件或文件无效，请重试", 2000);
+          return null;
+        }
+
         // Check extension name
         const extendName = files[0].name.slice(files[0].name.lastIndexOf(".") + 1).toLowerCase();
         if (allowImageUpload.indexOf(extendName) === -1) {

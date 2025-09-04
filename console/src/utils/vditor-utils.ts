@@ -273,10 +273,10 @@ function getCustomRenders(options: Options):
 /**
  * 进行自定义渲染器的后处理
  * @param vditor vditor
- * @param config Editor Config
+ * @param config Editor Config, 可选
  * @returns html
  */
-export function renderHTML(vditor: Vditor | undefined, config: EditorConfig): string {
+export function renderHTML(vditor: Vditor | undefined, config?: EditorConfig): string {
   if (!vditor) return "";
   let value = vditor.getHTML();
   const customRenders = vditor.vditor.options.customRenders;
@@ -285,7 +285,7 @@ export function renderHTML(vditor: Vditor | undefined, config: EditorConfig): st
     value = value.replace(reg, `<div class="language-${render.language}">$1</div>`);
   });
   // Remove H1 Title When start with "h1"
-  if (config.basic.firstH1AsTitle && value.startsWith("<h1")) {
+  if (config?.basic.firstH1AsTitle && value.startsWith("<h1")) {
     value = value.replace(/<h1(?:\s+[^>]*)?>(.*?)<\/h1>/, "");
     console.log(value);
   }

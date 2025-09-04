@@ -21,7 +21,7 @@ const generateCode = () => {
   if (props.schema.template) {
     let code = props.schema.template || "";
     const formkit = props.schema.formKit;
-    formkit.forEach((form: { [key: string]: string }) => {
+    formkit.forEach((form: { name: string; value: string; [key: string]: string }) => {
       code = code.replace(`$${form.name}$`, data.value[form.name] || form.value);
     });
     if (!props.schema.inline) code = "\n\n" + code + "\n\n";
@@ -42,7 +42,7 @@ watch(props, (val, old) => {
       loadKey.value = props.schema.id;
     }
     console.log("This Load Key: " + loadKey.value);
-    props.schema.formKit.forEach((form: { [key: string]: string }) => {
+    props.schema.formKit.forEach((form: { name: string; value: string; [key: string]: string }) => {
       data.value[form.name] = form.value;
     });
   }
